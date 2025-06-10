@@ -6,5 +6,5 @@ export const getDomain = (email: string): string => {
 };
 
 export const getBaseUrl = (): string => {
-  return 'https://carbon-footprint-backend-ktp9.onrender.com';
+  return 'https://pyaidemo.mobiloitte.ae';
 };
