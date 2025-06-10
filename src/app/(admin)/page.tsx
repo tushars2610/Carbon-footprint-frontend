@@ -434,7 +434,7 @@ export default function Ecommerce() {
     <>
       {/* Success Alert - Outside Popup */}
       {saveAlert?.type === 'success' && (
-        <div className="fixed top-4 right-4 z-50 p-4 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-lg shadow-lg">
+        <div className="fixed top-4 right-4 z-50 p-4 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-lg shadow-lg">
           {saveAlert.message}
         </div>
       )}
@@ -442,7 +442,7 @@ export default function Ecommerce() {
       {/* Floating Chat Toggle Button */}
       <button
         onClick={() => setIsChatVisible(!isChatVisible)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 hover:scale-105 rounded-full flex items-center justify-center shadow-lg transition-colors duration-1000"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-white hover:bg-emerald-600 rounded-full flex items-center justify-center shadow-lg transition-colors duration-200 hover:scale-105"
         title={isChatVisible ? "Hide Chat" : "Show Chat"}
       >
         <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
@@ -482,7 +482,7 @@ export default function Ecommerce() {
                       className={`flex gap-4 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       {message.type === 'assistant' && isClient && (
-                        <div className="flex-shrink-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <div className="flex-shrink-0 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
                           <Image
                             src={selectedAvatar}
                             alt="AI Avatar"
@@ -496,8 +496,8 @@ export default function Ecommerce() {
                       <div
                         className={`max-w-xs sm:max-w-md lg:max-w-lg xl:max-w-xl rounded-2xl px-4 py-3 ${
                           message.type === 'user'
-                            ? 'bg-blue-600 text-white ml-auto'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+                            ? 'bg-emerald-500 text-white ml-auto'
+                            : 'bg-emerald-50 dark:bg-emerald-900/20 text-gray-900 dark:text-white'
                         }`}
                       >
                         <MessageContent content={message.content} isTyping={message.isTyping} />
@@ -514,7 +514,7 @@ export default function Ecommerce() {
                   {/* Loading indicator */}
                   {isLoading && isClient && (
                     <div className="flex gap-4 justify-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                      <div className="flex-shrink-0 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
                         <Image
                           src={selectedAvatar}
                           alt="AI Avatar"
@@ -523,15 +523,15 @@ export default function Ecommerce() {
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                       </div>
-                      <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl px-4 py-3">
+                      <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl px-4 py-3">
                         <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"></div>
                           <div
-                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                            className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"
                             style={{ animationDelay: '0.1s' }}
                           ></div>
                           <div
-                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                            className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"
                             style={{ animationDelay: '0.2s' }}
                           ></div>
                         </div>
@@ -541,9 +541,10 @@ export default function Ecommerce() {
                   <div ref={messagesEndRef} />
                 </div>
 
-                {/* Input Area */}
+                {/* Input Area - Responsive Design */}
                 <div className="relative">
-                  <div className="flex items-center gap-2 p-2 border border-gray-300 dark:border-gray-600 rounded-2xl bg-white dark:bg-gray-800 shadow-sm">
+                  {/* Desktop Layout */}
+                  <div className="hidden sm:flex items-center gap-2 p-2 border border-gray-300 dark:border-gray-600 rounded-2xl bg-white dark:bg-gray-800 shadow-sm">
                     <input
                       type="text"
                       value={input}
@@ -559,20 +560,60 @@ export default function Ecommerce() {
                       disabled={isLoading}
                     />
 
-                    {/* Send Button */}
+                    {/* Desktop Buttons */}
                     <button
                       onClick={() => handleSubmit()}
                       disabled={!input.trim() || isLoading}
-                      className="flex-shrink-0 w-10 h-10 [background-color:#465FFF] disabled:bg-gray-400 disabled:cursor-not-allowed rounded-xl flex items-center justify-center transition-colors duration-200"
+                      className="flex-shrink-0 w-10 h-10 bg-emerald-500 hover:bg-emerald-600 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-xl flex items-center justify-center transition-colors duration-200"
                     >
                       <Send className="w-5 h-5 text-white" />
                     </button>
                     <button
                       onClick={() => setIsSavePopupOpen(true)}
-                      className="flex-shrink-0 w-10 h-10 [background-color:#ECF3FF] hover:[background-color:#465FFF] rounded-xl flex items-center justify-center transition-colors duration-200 hover:text-white [color:#465FFF]"
+                      className="flex-shrink-0 w-10 h-10 bg-emerald-50 hover:bg-emerald-500 rounded-xl flex items-center justify-center transition-colors duration-200 text-emerald-500 hover:text-white"
                     >
                       <Save className="w-5 h-5" />
                     </button>
+                  </div>
+
+                  {/* Mobile Layout */}
+                  <div className="sm:hidden">
+                    {/* Input Field */}
+                    <div className="flex items-center gap-2 p-2 border border-gray-300 dark:border-gray-600 rounded-2xl bg-white dark:bg-gray-800 shadow-sm mb-2">
+                      <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleSubmit();
+                          }
+                        }}
+                        placeholder="Type your message here..."
+                        className="flex-1 px-3 py-2.5 bg-transparent border-none outline-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm"
+                        disabled={isLoading}
+                      />
+                    </div>
+                    
+                    {/* Mobile Buttons Row */}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleSubmit()}
+                        disabled={!input.trim() || isLoading}
+                        className="flex-1 h-12 bg-emerald-500 hover:bg-emerald-600 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 text-white font-medium text-sm"
+                      >
+                        <Send className="w-4 h-4" />
+                        <span>Send</span>
+                      </button>
+                      <button
+                        onClick={() => setIsSavePopupOpen(true)}
+                        className="flex-1 h-12 bg-emerald-50 hover:bg-emerald-500 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 text-emerald-500 hover:text-white font-medium text-sm"
+                      >
+                        <Save className="w-4 h-4" />
+                        <span>Save</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -583,7 +624,7 @@ export default function Ecommerce() {
 
       {/* Save Chat Popup */}
       {isSavePopupOpen && (
-        <div className="fixed inset-0 bg-black/20 backdrop-blur-md flex items-center justify-center z-50 border-2 border-white">
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-md flex items-center justify-center z-50 border-2 border-white p-4">
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
               Save Chat
@@ -603,17 +644,17 @@ export default function Ecommerce() {
               placeholder="Enter chat name..."
               className="w-full px-4 py-3 mb-4 bg-transparent border border-gray-300 dark:border-gray-600 rounded-xl outline-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm sm:text-base"
             />
-            <div className="flex justify-end gap-2">
+            <div className="flex flex-col sm:flex-row justify-end gap-2">
               <button
                 onClick={handleCancelSave}
-                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
+                className="w-full sm:w-auto px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveChat}
                 disabled={!saveName.trim()}
-                className="px-4 py-2 [background-color:#465FFF] text-white rounded-xl hover:[background-color:#3b4ccc] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
+                className="w-full sm:w-auto px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
               >
                 Save
               </button>

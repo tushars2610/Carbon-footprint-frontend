@@ -62,7 +62,7 @@ const othersItems: NavItem[] = [
       { name: "Upload file", path: "/badge", pro: false },
       { name: "Pre-prompt", path: "/pre-prompt", pro: false },
       { name: "LLM Control", path: "/llm-control", pro: false },
-      { name: "LLM Model", path: "/llm-model", pro: false },
+      // { name: "LLM Model", path: "/llm-model", pro: false },
     ],
   },
 ];
