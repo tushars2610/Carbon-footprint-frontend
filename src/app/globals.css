@@ -1,0 +1,481 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-*: initial;
+  --font-inter: Inter, sans-serif;
+  --font-eco: 'Nunito Sans', sans-serif;
+
+  --breakpoint-*: initial;
+  --breakpoint-2xsm: 375px;
+  --breakpoint-xsm: 425px;
+  --breakpoint-3xl: 2000px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  --text-title-2xl: 72px;
+  --text-title-2xl--line-height: 90px;
+  --text-title-xl: 60px;
+  --text-title-xl--line-height: 72px;
+  --text-title-lg: 48px;
+  --text-title-lg--line-height: 60px;
+  --text-title-md: 36px;
+  --text-title-md--line-height: 44px;
+  --text-title-sm: 30px;
+  --text-title-sm--line-height: 38px;
+  --text-theme-xl: 20px;
+  --text-theme-xl--line-height: 30px;
+  --text-theme-sm: 14px;
+  --text-theme-sm--line-height: 20px;
+  --text-theme-xs: 12px;
+  --text-theme-xs--line-height: 18px;
+
+  --color-current: currentColor;
+  --color-transparent: transparent;
+  --color-white: #ffffff;
+  --color-black: #0f1419;
+
+  /* Primary Green Brand Colors - Forest/Eco Theme */
+  --color-brand-25: #f0fdf4;
+  --color-brand-50: #dcfce7;
+  --color-brand-100: #bbf7d0;
+  --color-brand-200: #86efac;
+  --color-brand-300: #4ade80;
+  --color-brand-400: #22c55e;
+  --color-brand-500: #16a34a;
+  --color-brand-600: #15803d;
+  --color-brand-700: #166534;
+  --color-brand-800: #14532d;
+  --color-brand-900: #052e16;
+  --color-brand-950: #022c22;
+
+  /* Secondary Emerald Colors for Accents */
+  --color-emerald-25: #f0fdfa;
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
+
+  /* Earth Tone Grays */
+  --color-gray-25: #fafaf9;
+  --color-gray-50: #f5f5f4;
+  --color-gray-100: #e7e5e4;
+  --color-gray-200: #d6d3d1;
+  --color-gray-300: #a8a29e;
+  --color-gray-400: #78716c;
+  --color-gray-500: #57534e;
+  --color-gray-600: #44403c;
+  --color-gray-700: #292524;
+  --color-gray-800: #1c1917;
+  --color-gray-900: #0c0a09;
+  --color-gray-950: #0a0908;
+  --color-gray-dark: #1a1916;
+
+  /* Nature-inspired Accent Colors */
+  --color-leaf-25: #f7fee7;
+  --color-leaf-50: #ecfccb;
+  --color-leaf-100: #d9f99d;
+  --color-leaf-200: #bef264;
+  --color-leaf-300: #a3e635;
+  --color-leaf-400: #84cc16;
+  --color-leaf-500: #65a30d;
+  --color-leaf-600: #4d7c0f;
+  --color-leaf-700: #365314;
+  --color-leaf-800: #1a2e05;
+  --color-leaf-900: #14532d;
+  --color-leaf-950: #052e16;
+
+  /* Success Colors (Already Green-focused) */
+  --color-success-25: #f0fdf4;
+  --color-success-50: #dcfce7;
+  --color-success-100: #bbf7d0;
+  --color-success-200: #86efac;
+  --color-success-300: #4ade80;
+  --color-success-400: #22c55e;
+  --color-success-500: #16a34a;
+  --color-success-600: #15803d;
+  --color-success-700: #166534;
+  --color-success-800: #14532d;
+  --color-success-900: #052e16;
+  --color-success-950: #022c22;
+
+  /* Warning Colors - Earth Orange */
+  --color-warning-25: #fffbeb;
+  --color-warning-50: #fef3c7;
+  --color-warning-100: #fde68a;
+  --color-warning-200: #fcd34d;
+  --color-warning-300: #fbbf24;
+  --color-warning-400: #f59e0b;
+  --color-warning-500: #d97706;
+  --color-warning-600: #b45309;
+  --color-warning-700: #92400e;
+  --color-warning-800: #78350f;
+  --color-warning-900: #451a03;
+  --color-warning-950: #292524;
+
+  /* Error Colors - Muted Red for Environmental Alerts */
+  --color-error-25: #fef2f2;
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+  --color-error-950: #450a0a;
+
+  /* Carbon/Coal Colors for Data Visualization */
+  --color-carbon-25: #fafaf9;
+  --color-carbon-50: #f5f5f4;
+  --color-carbon-100: #e7e5e4;
+  --color-carbon-200: #d6d3d1;
+  --color-carbon-300: #a8a29e;
+  --color-carbon-400: #78716c;
+  --color-carbon-500: #57534e;
+  --color-carbon-600: #44403c;
+  --color-carbon-700: #292524;
+  --color-carbon-800: #1c1917;
+  --color-carbon-900: #0c0a09;
+  --color-carbon-950: #000000;
+
+  /* Theme Accent Colors */
+  --color-theme-forest-500: #059669;
+  --color-theme-nature-500: #65a30d;
+
+  /* Eco-friendly Shadows */
+  --shadow-theme-md:
+    0px 4px 8px -2px rgba(5, 150, 105, 0.1),
+    0px 2px 4px -2px rgba(5, 150, 105, 0.06);
+  --shadow-theme-lg:
+    0px 12px 16px -4px rgba(5, 150, 105, 0.08),
+    0px 4px 6px -2px rgba(5, 150, 105, 0.03);
+  --shadow-theme-sm:
+    0px 1px 3px 0px rgba(5, 150, 105, 0.1),
+    0px 1px 2px 0px rgba(5, 150, 105, 0.06);
+  --shadow-theme-xs: 0px 1px 2px 0px rgba(5, 150, 105, 0.05);
+  --shadow-theme-xl:
+    0px 20px 24px -4px rgba(5, 150, 105, 0.08),
+    0px 8px 8px -4px rgba(5, 150, 105, 0.03);
+  --shadow-datepicker: -5px 0 0 #1a1916, 5px 0 0 #1a1916;
+  --shadow-focus-ring: 0px 0px 0px 4px rgba(22, 163, 74, 0.12);
+  --shadow-slider-navigation:
+    0px 1px 2px 0px rgba(5, 150, 105, 0.1), 0px 1px 3px 0px rgba(5, 150, 105, 0.1);
+  --shadow-tooltip:
+    0px 4px 6px -2px rgba(5, 150, 105, 0.05),
+    -8px 0px 20px 8px rgba(5, 150, 105, 0.05);
+  --shadow-eco-glow: 0px 0px 20px rgba(22, 163, 74, 0.15);
+
+  --drop-shadow-4xl:
+    0 35px 35px rgba(0, 0, 0, 0.25), 0 45px 65px rgba(0, 0, 0, 0.15);
+
+  --z-index-1: 1;
+  --z-index-9: 9;
+  --z-index-99: 99;
+  --z-index-999: 999;
+  --z-index-9999: 9999;
+  --z-index-99999: 99999;
+  --z-index-999999: 999999;
+}
+
+/*
+  Updated border color defaults for green theme
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-emerald-200, currentColor);
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  body {
+    @apply relative font-normal font-inter z-1 bg-emerald-25;
+  }
+}
+
+/* Eco-friendly Menu Components */
+@utility menu-item {
+  @apply relative flex items-center w-full gap-3 px-3 py-2 font-medium rounded-lg text-theme-sm;
+}
+
+@utility menu-item-active {
+  @apply bg-brand-50 text-brand-600 dark:bg-brand-500/[0.12] dark:text-brand-400;
+}
+
+@utility menu-item-inactive {
+  @apply text-gray-700 hover:bg-emerald-50 group-hover:text-gray-700 dark:text-gray-300 dark:hover:bg-emerald-900/20 dark:hover:text-gray-300;
+}
+
+@utility menu-item-icon {
+  @apply text-gray-500 group-hover:text-brand-600 dark:text-gray-400;
+}
+
+@utility menu-item-icon-active {
+  @apply text-brand-600 dark:text-brand-400;
+}
+
+@utility menu-item-icon-inactive {
+  @apply text-gray-500 group-hover:text-brand-600 dark:text-gray-400 dark:group-hover:text-gray-300;
+}
+
+@utility menu-item-arrow {
+  @apply relative;
+}
+
+@utility menu-item-arrow-active {
+  @apply rotate-180 text-brand-600 dark:text-brand-400;
+}
+
+@utility menu-item-arrow-inactive {
+  @apply text-gray-500 group-hover:text-brand-600 dark:text-gray-400 dark:group-hover:text-gray-300;
+}
+
+@utility menu-dropdown-item {
+  @apply relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-theme-sm font-medium;
+}
+
+@utility menu-dropdown-item-active {
+  @apply bg-brand-50 text-brand-600 dark:bg-brand-500/[0.12] dark:text-brand-400;
+}
+
+@utility menu-dropdown-item-inactive {
+  @apply text-gray-700 hover:bg-emerald-50 dark:text-gray-300 dark:hover:bg-emerald-900/20;
+}
+
+@utility menu-dropdown-badge {
+  @apply block rounded-full px-2.5 py-0.5 text-xs font-medium uppercase text-brand-600 dark:text-brand-400;
+}
+
+@utility menu-dropdown-badge-active {
+  @apply bg-brand-100 dark:bg-brand-500/20;
+}
+
+@utility menu-dropdown-badge-inactive {
+  @apply bg-brand-50 group-hover:bg-brand-100 dark:bg-brand-500/15 dark:group-hover:bg-brand-500/20;
+}
+
+/* Eco Scrollbar Styles */
+@utility no-scrollbar {
+  /* Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    @apply size-1.5;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply rounded-full;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-emerald-200 rounded-full dark:bg-emerald-700;
+  }
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #047857;
+}
+
+/* Carbon Tracking Specific Utilities */
+@utility carbon-metric-card {
+  @apply bg-white dark:bg-gray-900 rounded-xl p-6 shadow-theme-md border border-emerald-100 dark:border-emerald-800;
+}
+
+@utility emission-reduction-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-100 text-brand-800 dark:bg-brand-900 dark:text-brand-200;
+}
+
+@utility carbon-neutral-highlight {
+  @apply bg-gradient-to-r from-brand-50 to-emerald-50 dark:from-brand-900/20 dark:to-emerald-900/20 border-l-4 border-brand-500;
+}
+
+@layer utilities {
+  /* Remove Date Icon */
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="time"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
+
+  /* Eco-friendly Gradients */
+  .bg-eco-gradient {
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #86efac 100%);
+  }
+
+  .bg-forest-gradient {
+    background: linear-gradient(135deg, #166534 0%, #15803d 50%, #16a34a 100%);
+  }
+
+  .text-eco-gradient {
+    background: linear-gradient(135deg, #16a34a 0%, #059669 50%, #065f46 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Third-party libraries CSS - Updated for Green Theme */
+.apexcharts-legend-text {
+  @apply text-gray-700! dark:text-gray-400!;
+}
+
+.apexcharts-text {
+  @apply fill-gray-700! dark:fill-gray-400!;
+}
+
+.apexcharts-tooltip.apexcharts-theme-light {
+  @apply gap-1 rounded-lg! border-emerald-200! p-3 shadow-theme-sm! dark:border-emerald-800! dark:bg-gray-900!;
+}
+
+.apexcharts-legend-text {
+  @apply pl-5! text-gray-700! dark:text-gray-400!;
+}
+.apexcharts-tooltip-series-group {
+  @apply p-0!;
+}
+.apexcharts-tooltip-y-group {
+  @apply p-0!;
+}
+.apexcharts-tooltip-title {
+  @apply mb-0! border-b-0! bg-transparent! p-0! text-[10px]! leading-4! text-gray-800! dark:text-white/90!;
+}
+.apexcharts-tooltip-text {
+  @apply text-theme-xs! text-gray-700! dark:text-white/90!;
+}
+.apexcharts-tooltip-text-y-value {
+  @apply font-medium!;
+}
+
+.apexcharts-gridline {
+  @apply stroke-emerald-100! dark:stroke-emerald-800!;
+}
+
+/* Calendar Styles - Updated for Green Theme */
+.flatpickr-wrapper {
+  @apply w-full;
+}
+.flatpickr-calendar {
+  @apply mt-2 bg-white! rounded-xl! p-5! border! border-emerald-200! text-gray-500! dark:bg-gray-dark! dark:text-gray-400! dark:shadow-theme-xl! 2xsm:w-auto!;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+  @apply stroke-brand-500;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected.inRange,
+.flatpickr-day.startRange.inRange,
+.flatpickr-day.endRange.inRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange:focus,
+.flatpickr-day.endRange:focus,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover,
+.flatpickr-day.selected.prevMonthDay,
+.flatpickr-day.startRange.prevMonthDay,
+.flatpickr-day.endRange.prevMonthDay,
+.flatpickr-day.selected.nextMonthDay,
+.flatpickr-day.startRange.nextMonthDay,
+.flatpickr-day.endRange.nextMonthDay {
+  background: #16a34a;
+  @apply border-brand-500! bg-brand-500! hover:border-brand-600! hover:bg-brand-600!;
+}
+
+/* Carbon Emission Specific Styles */
+.emission-chart-container {
+  @apply bg-white dark:bg-gray-900 rounded-xl shadow-theme-lg border border-emerald-100 dark:border-emerald-800;
+}
+
+.carbon-footprint-card {
+  @apply bg-gradient-to-br from-brand-50 to-emerald-50 dark:from-brand-900/20 dark:to-emerald-900/20 border border-brand-200 dark:border-brand-700 rounded-xl p-6 shadow-eco-glow;
+}
+
+.sustainability-metric {
+  @apply flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg border border-emerald-100 dark:border-emerald-700 hover:shadow-theme-md transition-shadow;
+}
+
+.eco-button-primary {
+  @apply bg-brand-500 hover:bg-brand-600 text-white font-medium py-2.5 px-4 rounded-lg shadow-theme-sm hover:shadow-theme-md transition-all duration-200;
+}
+
+.eco-button-secondary {
+  @apply bg-emerald-100 hover:bg-emerald-200 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50 font-medium py-2.5 px-4 rounded-lg transition-all duration-200;
+}
+
+/* Form Controls for Carbon Tracking */
+.form-check-input:checked ~ span {
+  @apply border-[6px] border-brand-500 bg-brand-500 dark:border-brand-500;
+}
+
+.taskCheckbox:checked ~ .box span {
+  @apply opacity-100 bg-brand-500;
+}
+.taskCheckbox:checked ~ p {
+  @apply text-gray-400 line-through;
+}
+.taskCheckbox:checked ~ .box {
+  @apply border-brand-500 bg-brand-500 dark:border-brand-500;
+}
+
+.task {
+  transition: all 0.2s ease;
+}
+
+.task {
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(5, 150, 105, 0.1),
+    0 1px 2px 0 rgba(5, 150, 105, 0.06);
+  opacity: 0.8;
+  cursor: grabbing;
+}
+
+/* Environmental Data Visualization */
+.co2-level-indicator {
+  @apply h-2 bg-gradient-to-r rounded-full overflow-hidden;
+}
+
+.co2-level-low {
+  @apply from-brand-400 to-brand-500;
+}
+
+.co2-level-medium {
+  @apply from-warning-400 to-warning-500;
+}
+
+.co2-level-high {
+  @apply from-error-400 to-error-500;
+}
+
+.renewable-energy-badge {
+  @apply inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-leaf-100 text-leaf-800 dark:bg-leaf-900/30 dark:text-leaf-300;
+}
