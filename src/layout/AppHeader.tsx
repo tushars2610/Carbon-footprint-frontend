@@ -92,7 +92,7 @@ const AppHeader: React.FC = () => {
                 src="/images/logo/plant_planet.png"
                 alt="Logo"
               />
-              <span className="dark:hidden">Mobiloitte</span>
+              <span className="dark:hidden">Planet Pulse</span>
             </div>
             <div className="flex items-center justify-center">
               <Image
@@ -102,7 +102,7 @@ const AppHeader: React.FC = () => {
                 src="/images/logo/plant_planet.png"
                 alt="Logo"
               />
-              <span className="hidden dark:block" style={{ color: 'white' }}>Mobiloitte</span>
+              <span className="hidden dark:block" style={{ color: 'white' }}>Planet Pulse</span>
             </div>
           </Link>
 
