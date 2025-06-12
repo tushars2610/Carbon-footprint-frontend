@@ -49,7 +49,7 @@ export default function CarbonHistory() {
   const fetchCalculations = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:8000/carbon/calculations?limit=10&offset=0&sort_order=desc', {
+      const response = await fetch('https://carbon-footprint-backend-ktp9.onrender.com/carbon/calculations?limit=10&offset=0&sort_order=desc', {
         method: 'GET',
         headers: {
           'accept': 'application/json',
@@ -90,7 +90,7 @@ export default function CarbonHistory() {
       setShowDeleteConfirmation(false);
       setIsDeleting(true);
 
-      const response = await fetch(`http://localhost:8000/carbon/calculations/${encodeURIComponent(calculationToDelete)}`, {
+      const response = await fetch(`https://carbon-footprint-backend-ktp9.onrender.com/carbon/calculations/${encodeURIComponent(calculationToDelete)}`, {
         method: 'DELETE',
         headers: {
           'accept': 'application/json',
