@@ -1,6 +1,7 @@
 'use client';
 import ComponentCard from "@/components/common/ComponentCard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import Button from "@/components/ui/button/Button";
 import {
   Table,
   TableBody,
@@ -40,37 +41,85 @@ export default function CarbonHistory() {
   const [calculations, setCalculations] = useState<Calculation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<boolean>(false);
+  const [calculationToDelete, setCalculationToDelete] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [deleteSuccess, setDeleteSuccess] = useState<string | null>(null);
+
+  const fetchCalculations = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('http://localhost:8000/carbon/calculations?limit=10&offset=0&sort_order=desc', {
+        method: 'GET',
+        headers: {
+          'accept': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data: CalculationsResponse = await response.json();
+      setCalculations(data.data);
+    } catch (error) {
+      console.error('Error fetching calculations:', error);
+      setError('Failed to load calculation history');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchCalculations = async () => {
-      try {
-        const response = await fetch('https://carbon-footprint-backend-ktp9.onrender.com/carbon/calculations?limit=10&offset=0&sort_order=desc', {
-          method: 'GET',
-          headers: {
-            'accept': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data: CalculationsResponse = await response.json();
-        setCalculations(data.data);
-      } catch (error) {
-        console.error('Error fetching calculations:', error);
-        setError('Failed to load calculation history');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchCalculations();
   }, []);
 
   const handleViewDetails = (id: string) => {
     router.push(`/calculator?id=${id}`);
   }
+
+  const handleDeleteClick = (timestamp: string) => {
+    setCalculationToDelete(timestamp);
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!calculationToDelete) return;
+
+    try {
+      setShowDeleteConfirmation(false);
+      setIsDeleting(true);
+
+      const response = await fetch(`http://localhost:8000/carbon/calculations/${encodeURIComponent(calculationToDelete)}`, {
+        method: 'DELETE',
+        headers: {
+          'accept': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Delete response:', data);
+      setDeleteSuccess(data.message);
+      
+      // Refresh the list
+      await fetchCalculations();
+    } catch (error) {
+      console.error('Error deleting calculation:', error);
+      setError('Failed to delete calculation');
+    } finally {
+      setIsDeleting(false);
+      setCalculationToDelete(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setCalculationToDelete(null);
+    setShowDeleteConfirmation(false);
+  };
 
   return (
     <div>
@@ -208,6 +257,7 @@ export default function CarbonHistory() {
                                 <ChatIcon className="w-5 h-5" />
                               </button>
                               <button
+                                onClick={() => handleDeleteClick(calc.timestamp)}
                                 className="p-2 text-error-500 hover:text-error-600 transition-colors duration-200"
                                 title="Delete"
                               >
@@ -225,6 +275,89 @@ export default function CarbonHistory() {
           </div>
         </ComponentCard>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirmation && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+            <div className="flex flex-col">
+              <div className="flex items-center mb-4">
+                <div className="rounded-full bg-red-100 p-2 mr-3">
+                  <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-900">Confirm Deletion</h3>
+              </div>
+              <p className="text-gray-600 mb-4">Are you sure you want to delete this calculation?</p>
+              <div className="flex justify-end gap-3">
+                <Button
+                  size="md"
+                  variant="outline"
+                  onClick={handleCancelDelete}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  size="md"
+                  variant="danger"
+                  onClick={handleConfirmDelete}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Processing Section */}
+      {isDeleting && (
+        <div className="space-y-5 sm:space-y-6 mt-10">
+          <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+            <div className="px-6 py-5">
+              <h3 className="text-base font-medium text-gray-800 dark:text-white/90">
+                Processing Deletion
+              </h3>
+            </div>
+            <div className="p-6 border-t border-gray-100 dark:border-gray-800 xl:p-10 flex flex-col items-center justify-center">
+              <div className="w-16 h-16 border-4 border-t-red-500 border-b-red-500 border-l-gray-200 border-r-gray-200 rounded-full animate-spin mb-4"></div>
+              <h4 className="text-lg font-medium text-gray-900 mb-2">Please wait</h4>
+              <p className="text-gray-600 text-center">
+                Your calculation is being deleted...
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success Message */}
+      {deleteSuccess && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+            <div className="flex flex-col">
+              <div className="flex items-center mb-4">
+                <div className="rounded-full bg-green-100 p-2 mr-3">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-900">Delete Successful</h3>
+              </div>
+              <p className="text-gray-600 mb-4">{deleteSuccess}</p>
+              <div className="flex justify-end">
+                <Button
+                  size="md"
+                  variant="primary"
+                  onClick={() => setDeleteSuccess(null)}
+                >
+                  Close
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
